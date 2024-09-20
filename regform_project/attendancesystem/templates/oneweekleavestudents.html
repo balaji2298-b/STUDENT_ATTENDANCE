@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <title>ONE WEEK LEAVE STUDENTS</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    </head>
+        <style>
+            .notfound{
+                 display: none;
+                 }
+            table{
+                width:50%;
+                margin:6px;
+                border-collapse:collapse;
+            }
+            table,th,td{
+                border:1px Solid #6C220B;
+            }
+            h1{
+                text-align:center;
+                font-size:large;
+                color:red;
+            }
+            table th,table td{
+                padding:6px;
+                text-align:center;
+            }
+            #txt_name{
+                width:180px;
+                text-align:center;
+                margin:5px;
+            }
+            #txt_course{
+                width:180px;
+                text-align:center;
+                margin:5px;
+            }
+            button{
+                background-color:blue;
+                font-size:20px;
+                color:white;
+                margin-top:10px;
+                padding:15px 25px;
+                border-radius:8px;
+                border:1px solid #006D77;
+                box-shadow:2px;
+            }
+        </style>
+    <body>
+        <h1> ONE WEEK LEAVE STUDENTS </h1>
+        <div id ="htmlContent">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary " onclick="ExportToExcel('xlsx')" type="button">GENERATE EXCEL</button>   
+                <button class="btn btn-primary me-md-2" id="generatePDF" type="button"> GENERATE PDF</button>
+                <input type='text' id='txt_name'class="form-control" placeholder='Enter Search Name'>
+                <input type='text' id='txt_course' class="form-control" placeholder='Enter Search Course'> 
+            </div>
+        <table id="tbl_exporttable_to_xls" table class="table table-boreded">
+            <thead>
+                <tr>
+                    <th scope="col">Enroll.no</th>
+                    <th scope="col">Students Name</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Course</th>
+                    <th scope="col">In Time</th>
+                    <th scope="col">Out Time</th>
+                    <th scope="col">Pre</th>
+                    <th scope="col">Abe</th>
+                    <th scope="col">Inform</th>
+                    <th scope="col">Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in formpagef %}
+                <tr>
+                    <td>{{ student.serial_no }}</td>
+                    <td>{{ student.studentsname }}</td>
+                    <td>{{ student.contactnumber }}</td>
+                    <td>{{ student.course }}</td>
+                    <td>{{ student.intime }}</td>
+                    <td>{{ student.outtime }}</td>
+                    <td>{{ student.pre }}</td>
+                    <td>{{ student.abe }}</td>
+                    <td>{{ student.inform }}</td>
+                    <td>      </td>    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="editor"></div>
+    </body>
+        <script type='text/javascript'>
+            $(document).ready(function(){
+                $('#txt_name').keyup(function(){
+                    var name = $(this).val();
+                    $('table tbody tr').hide();
+                    var len = $('table tbody tr:not(.notfound) td:contains("'+name+'")').length;
+                    if(len > 0){
+                        $('table tbody tr:not(.notfound) td:contains("'+name+'")').each(function(){
+                             $(this).closest('tr').show();
+                        });
+                    }
+                    else{
+                            $('.notfound').show();
+                        }
+                });
+            });
+            $(document).ready(function(){
+                $('#txt_course').keyup(function(){
+                    var course = $(this).val();
+                    $('table tbody tr').hide();
+                    var len = $('table tbody tr:not(.notfound) td:contains("'+course+'")').length;
+                    if(len > 0){
+                        $('table tbody tr:not(.notfound) td:contains("'+course+' ")').each(function(){
+                             $(this).closest('tr').show();
+                        });
+                    }
+                    else{
+                            $('.notfound').show();
+                        }
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            var doc = new jsPDF('p', 'mm', [793.706, 1122.52]);
+            var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+            return true;
+            }
+            };
+            $('#generatePDF').click(function () {
+            doc.fromHTML($('#htmlContent').html(), 15, 15, {
+            'width': 700,
+            'elementHandlers': specialElementHandlers
+            });
+            doc.save('oneweekleavestudents_file.pdf');
+            });
+        </script> 
+    <script>      
+        function ExportToExcel(type, fn, dl) {        
+        var elt = document.getElementById('tbl_exporttable_to_xls');         
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });         
+        return dl ?             
+        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :               
+        XLSX.writeFile(wb, fn || ('oneweekleavestudents.' + (type || 'xlsx')));
+        }
+        </script>        
+</html>

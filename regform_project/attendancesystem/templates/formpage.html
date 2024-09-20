@@ -1,0 +1,115 @@
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>formpage</title>
+    {% load static %}
+    </head>
+<style>
+        body{
+        background:url("{% static 'assets/images/faces/Beach palm.jpg' %}");
+        font-family:Verdana,Geneva,tahoma,sans-serif;
+    }
+    form{
+        width:500px;
+        margin:50px auto;
+        padding:10px 20px 30px;
+        background:transparent;
+        color:black;
+        font-size:20px;
+        border-radius:20px;
+    }
+    form.textlabel{
+        display:block;
+    }
+    form h2{
+        text-align:center;
+    }
+    input input{
+        width:200%;
+        font-size:2.2em;
+        border:1px solid#006D77;
+        border-radius:10px;
+        padding:10px 20px;
+        box-sizing:border-box;
+        margin:15px 0px 15px;
+    }
+    input:focus{
+        background-color:whitesmoke;
+    }
+    button{
+    background-color:blue;
+    font-size:20px;
+    color:white;
+    margin-top:10px;
+    padding:15px 25px;
+    border-radius:8px;
+    border:1px solid #006D77;
+    box-shadow:2px;
+}
+ </style> 
+ 
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h2>FORM</h2>
+        
+    <br>
+        <div class="form">
+              <input type ="text" name="serial_no" class="form-control" style="width:95%;" required="required" placeholder="ENROLL.NO:">
+        </div>
+    <br>
+        <div class="form">
+            <input type ="text" name="studentsname" class="form-control" style="width:95%;" required="required" placeholder="STUDENTS  NAME:">
+        </div>
+    <br>
+        <div class="form">
+            <input type ="text" name="contactnumber" pattern="[0-9]{10}" class="form-control" style="width:95%;" required="required" placeholder="CONTACT NUMBER:">
+        </div>
+    <br>
+        <div class="form">
+           <select type="text" name="course" class="form-control" style="width:95%;" required="required">
+            <option>SELECT COURSE:</option>
+                <option value="CORE JAVA">CORE JAVA</option>
+                <option value="CORE PYTHON">CORE PYTHON</option>
+                <option value="TALLY">TALLY</option>
+                <option value="TYPEWRITING">TYPEWRITING</option>
+            </select>
+        </div>
+    <br>
+        <div class="form">
+            <input type="text" name="intime" placeholder="IN TIME:" class="form-control" style="width:95%;" onfocus="this.type='time'">
+        </div>
+    <br>
+        <div class="form">
+            <input type="text" name="outtime" placeholder="OUT TIME:" class="form-control" style="width:95%;"  onfocus="this.type='time'">
+        </div>
+    <br>
+        <div class="form">
+            <input type ="text" name="pre" class="form-control" style="width:95%;" required="required" placeholder="PRE:">
+        </div>
+    <br>
+        <div class="form">
+             <input type ="text" name="abe" class="form-control" style="width:95%;" required="required" placeholder="ABE:">
+        </div>
+    <br>
+        <div class="form">
+            <input type ="text" name="inform" class="form-control" style="width:95%;" required="required" placeholder="INFORM:">
+        </div>
+    <br>
+        <div class="form">
+            <label style="text-align:center;">MESSAGES:</label>
+            <button type ="button" name="Send" class="btn btn-primary" style="float:center;">SEND</button>
+        </div>
+    <br>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="submit">SUBMIT</button>
+      </div>
+     </div>
+    </form>
+    </body>
+</html>
+        
